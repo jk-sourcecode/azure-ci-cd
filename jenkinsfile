@@ -1,5 +1,5 @@
 node {
-    stage('Pull') {
-        echo 'Testing'
-    }
+    stage('Deploy') {
+            echo 'Orchestrating a new deployment with kubectl is a simple exercise left to the reader ;)'
+        }
 }
