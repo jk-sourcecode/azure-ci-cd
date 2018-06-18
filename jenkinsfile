@@ -1,8 +1,10 @@
 node {
+    def container
+
     stage('Pull') {
             checkout scm
         }
     stage('Build') {
-        sh 'docker build .'
+        sh """docker build ."""
     }
 }
