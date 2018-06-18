@@ -1,10 +1,14 @@
 node {
-    def container
+    def app
 
     stage('Pull') {
             checkout scm
         }
-    stage('Build') {
-        container = docker.build("jwtapi:latest")
-    }
+    stage('Build and Push to Azure Container Registry') {
+                app = docker.build('acrjdtest.azurecr.io/node-demo')
+                docker.withRegistry('https://acrjdtest.azurecr.io', 'acr_credentials') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push('latest')
+                }
+        }
 }
