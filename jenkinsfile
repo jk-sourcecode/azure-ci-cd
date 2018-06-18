@@ -1,5 +1,4 @@
 node {
-    checkout scm
     stage('Deploy') {
             echo 'Orchestrating a new deployment with kubectl is a simple exercise left to the reader ;)'
         }
