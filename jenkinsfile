@@ -1,5 +1,8 @@
 node {
-    stage('Deploy') {
-            echo 'Orchestrating a new deployment with kubectl is a simple exercise left to the reader ;)'
+    stage('Pull') {
+            checkout scm
         }
+    stage('Build') {
+        sh 'Docker build .'
+    }
 }
