@@ -9,6 +9,6 @@ node {
     stage('Build') {
         echo 'Building docker image'
         echo """building version-${PACKAGE_VERSION}"""
-        sh """docker build -t Test/secure-api-jwt:version-${PACKAGE_VERSION} ."""
+        sh """docker build -t test/secure-api-jwt:version-${PACKAGE_VERSION} ."""
     }
 }
