@@ -5,6 +5,7 @@ node {
     def PACKAGE_VERSION = sh(returnStdout: true, script: /sed -nE 's\/^\s*"version": "(.*?)",$\/\1\/p' package.json/).trim()   
 
     stage('Pull') {
+        echo ${devjwtapi-acr-path}
         checkout scm
     }
 
