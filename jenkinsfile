@@ -3,9 +3,9 @@ import groovy.json.JsonSlurper
 node {
 
     def PACKAGE_VERSION = sh(returnStdout: true, script: /sed -nE 's\/^\s*"version": "(.*?)",$\/\1\/p' package.json/).trim()   
-
+    def testPath = "${env.devjwtapi-acr-path}"
     stage('Pull') {
-        echo """${devjwtapi-acr-path}"""
+        echo """${testPath}"""
         checkout scm
     }
 
