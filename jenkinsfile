@@ -2,8 +2,7 @@ import groovy.json.JsonSlurper
 
 node {
 
-    def PACKAGE_VERSION = sh(returnStdout: true, script: /sed -nE 's\/^\s*"version": "(.*?)",$\/\1\/p' package.json/).trim()
-    def dockerImage
+    def PACKAGE_VERSION = sh(returnStdout: true, script: /sed -nE 's\/^\s*"version": "(.*?)",$\/\1\/p' package.json/).trim()   
 
     stage('Pull') {
         checkout scm
@@ -12,11 +11,11 @@ node {
     stage('Build') {
         echo 'Building docker image'
         echo """version-${PACKAGE_VERSION}"""
-        /*sh """docker build -t test/secure-api-jwt:version-${PACKAGE_VERSION} ."""*/
-        dockerImage = docker.build("test/secure-api-jwt:version-${PACKAGE_VERSION}")
+        sh """docker build -t devjwtapi.azurecr.io/secure-api-jwt:version-${PACKAGE_VERSION} ."""
     }
     
     stage('Publish') {
-        dockerImage.push()
+        sh "docker login -u devjwtapi -p =6zDPwQLXgMQEcJRHKEzYvLZEp61VDL3 devjwtapi.azurecr.io"
+        sh """docker push devjwtapi.azurecr.io/secure-api-jwt:version-${PACKAGE_VERSION}"""
     }
 }
