@@ -3,17 +3,20 @@ import groovy.json.JsonSlurper
 node {
 
     def PACKAGE_VERSION = sh(returnStdout: true, script: /sed -nE 's\/^\s*"version": "(.*?)",$\/\1\/p' package.json/).trim()
-    def acrSettings
-  
+    def dockerImage
 
-        stage('Pull') {
-            checkout scm
-        }
+    stage('Pull') {
+        checkout scm
+    }
 
-        stage('Build') {
-            echo 'Building docker image'
-            echo """version-${PACKAGE_VERSION}"""
-            sh """docker build -t test/secure-api-jwt:version-${PACKAGE_VERSION} ."""
-        }
+    stage('Build') {
+        echo 'Building docker image'
+        echo """version-${PACKAGE_VERSION}"""
+        /*sh """docker build -t test/secure-api-jwt:version-${PACKAGE_VERSION} ."""*/
+        dockerImage = docker.build("test/secure-api-jwt:version-${PACKAGE_VERSION}")
+    }
     
+    stage('Publish') {
+        dockerImage.push()
+    }
 }
